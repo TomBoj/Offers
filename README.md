@@ -3,7 +3,7 @@
 This SpringBoot application is built with Gradle.
 To start the application, simply run:
 
-```./gradlew bootRun```
+`./gradlew bootRun`
 
 By default, the application will run on http://localhost:8081.
 

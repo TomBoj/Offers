@@ -27,6 +27,8 @@ public class Offer {
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 	
+	public Offer() {}
+	
 	public Offer(List<Product> products, String description, double price, LocalDateTime startDate, LocalDateTime endDate) {
 		this.products = products;
 		this.description = description;
