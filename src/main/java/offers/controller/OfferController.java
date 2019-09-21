@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -33,6 +34,11 @@ public class OfferController {
 	@PutMapping("/offers")
 	public Offer createOffer(@RequestBody OfferDTO offerDto) throws NotFoundException, InvalidDatesException {
 		return offerService.createOffer(offerDto);
+	}
+	
+	@GetMapping("/offers/{offerId}")
+	public Offer getOffer(@PathVariable Long offerId) throws NotFoundException {
+		return offerService.getOffer(offerId);
 	}
 
 }
