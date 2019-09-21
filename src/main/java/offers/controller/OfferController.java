@@ -7,17 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import offers.domain.Offer;
-import offers.repository.OfferRepository;
+import offers.service.OfferService;
 
 @RestController
 public class OfferController {
 	
 	@Autowired
-	OfferRepository offerRepositroy;
+	private OfferService offerService;
 	
 	@GetMapping("/offers")
 	public List<Offer> getOffers() {
-		return offerRepositroy.findAll();
+		return offerService.getAllOffers();
 	}
 
 }

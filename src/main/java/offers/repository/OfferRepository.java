@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import offers.domain.Offer;
 
 @Repository
-public interface OfferRepository extends JpaRepository<Offer, Double> {
+public interface OfferRepository extends JpaRepository<Offer, Long> {
 
 }
