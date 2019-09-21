@@ -21,6 +21,7 @@ import org.mockito.MockitoAnnotations;
 import com.google.common.collect.Lists;
 
 import offers.domain.Offer;
+import offers.domain.OfferStatus;
 import offers.domain.Product;
 import offers.exception.InvalidDatesException;
 import offers.exception.NotFoundException;
@@ -170,6 +171,53 @@ public class OfferServiceImplTest {
 				.build();
 	
 		offerService.createOffer(offerDto);		
+	}
+	
+	@Test
+	public void cancelOfferTest() throws NotFoundException {
+		long testId = 0;
+		Product firstProduct = new Product("Test name 1", "Test description 1", 1.50);
+		Product secondProduct = new Product("Test name 2", "Test description 2", 2.50);
+		List<Product> returnProducts = Lists.newArrayList(firstProduct, secondProduct);
+		Offer testOffer = new Offer(returnProducts, "Test offer", 3.50,
+				LocalDateTime.of(2019, 10, 5, 0, 0), LocalDateTime.of(2019, 10, 12, 23, 59));
+		testOffer.setStatus(OfferStatus.VALID);
+		doReturn(Optional.of(testOffer)).when(offerRepository).findById(eq(testId));
+		
+		ArgumentCaptor<Offer> offerCaptor = ArgumentCaptor.forClass(Offer.class);	
+		offerService.cancelOffer(testId);
+		
+		verify(offerRepository, times(1)).save(offerCaptor.capture());
+		Offer actualOffer = offerCaptor.getValue();
+		assertEquals("Offers status should now be cancelled", OfferStatus.CANCELLED, actualOffer.getStatus());		
+	}
+	
+	@Test
+	public void cancelOfferExpiredTest() throws NotFoundException {
+		long testId = 0;
+		Product firstProduct = new Product("Test name 1", "Test description 1", 1.50);
+		Product secondProduct = new Product("Test name 2", "Test description 2", 2.50);
+		List<Product> returnProducts = Lists.newArrayList(firstProduct, secondProduct);
+		Offer testOffer = new Offer(returnProducts, "Test offer", 3.50,
+				LocalDateTime.of(2019, 10, 5, 0, 0), LocalDateTime.of(2019, 10, 12, 23, 59));
+		testOffer.setStatus(OfferStatus.EXPIRED);
+		doReturn(Optional.of(testOffer)).when(offerRepository).findById(eq(testId));
+		
+		ArgumentCaptor<Offer> offerCaptor = ArgumentCaptor.forClass(Offer.class);	
+		offerService.cancelOffer(testId);
+		
+		verify(offerRepository, times(1)).save(offerCaptor.capture());
+		Offer actualOffer = offerCaptor.getValue();
+		assertEquals("Offers status should now be cancelled", OfferStatus.EXPIRED, actualOffer.getStatus());		
+	}
+	
+	
+	@Test(expected = NotFoundException.class)
+	public void cancelOfferNotFoundTest() throws NotFoundException {
+		long testId = 0;
+		doReturn(Optional.empty()).when(offerRepository).findById(eq(testId));
+		offerService.cancelOffer(testId);		
+		verify(offerRepository, times(0)).save(any(Offer.class));
 	}
 	
 }

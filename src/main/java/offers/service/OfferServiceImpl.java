@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 
 import offers.domain.Offer;
+import offers.domain.OfferStatus;
 import offers.domain.Product;
 import offers.exception.InvalidDatesException;
 import offers.exception.NotFoundException;
@@ -58,6 +59,16 @@ public class OfferServiceImpl implements OfferService {
 		}
 		newOffer.setProducts(products);
 		return offerRepository.save(newOffer);
+	}
+
+	@Override
+	public Offer cancelOffer(long id) throws NotFoundException {
+		Offer offer = offerRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException(String.format("Offer with id %d not found", id)));
+		if(offer.getStatus() != OfferStatus.EXPIRED) {
+			offer.setStatus(OfferStatus.CANCELLED);
+		}
+		return offerRepository.save(offer);
 	}
 
 }

@@ -15,4 +15,5 @@ public interface OfferService {
 	
 	Offer createOffer(OfferDTO offerDto) throws NotFoundException, InvalidDatesException;
 	
+	Offer cancelOffer(long id) throws NotFoundException;
 }

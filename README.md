@@ -19,13 +19,14 @@ This port is configured in `src/main/resources/application.properties`
 
 Endpoints
 ------
-For simplicity, there are only 5 exposed REST endpoints, these are:
+For simplicity, there are only 6 exposed REST endpoints, these are:
 
 * GET **/products** - returns list of all products
 * GET **/products/{productId}** - returns a single product
 * GET **/offers** - returns list of all offers
 * GET **/offers/{offerId}** - returns a single offer
 * PUT **/offers** - creates a new offer
+* POST **/offers/{offerId}/cancel** - cancels an offer
 
 Creating an offer
 ------
@@ -59,3 +60,5 @@ Notes and assumptions
 * I have not disallowed the fetching of expired, cancelled, or pending offers, I've simply incorporated the status into the object. This means we could put any restriction (either frontend or backend) on these object in future development.
 * For simplicity I have limited an offer to only include a product once, so you cannot add multiple quantities of a single product to an offer.
 * For now, offers can only be created, returned or cancelled; I have not gone as far as to allow modifying an existing offer.
+* The products are pre-populated with the sql script in `src/main/resources/data.sql`
+* The in-memory database does not persist to a file, so when you kill the gradle process running the application, your created offers will be lost.

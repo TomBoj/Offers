@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.verify;
 
 import java.time.LocalDateTime;
@@ -76,6 +77,18 @@ public class OfferStatusUtilsTest {
 		
 		verify(offerRepository, times(1)).save(offerCaptor.capture());
 		assertEquals("Offer should be pending", OfferStatus.PENDING, offerCaptor.getValue().getStatus());		
+	}
+	
+	@Test
+	public void updateOfferStatusesCancelledTest() {
+		LocalDateTime currentDate = LocalDateTime.now();
+		Offer cancelledOffer = new Offer(Lists.newArrayList(), "test cancelled offer", 0.12, 
+				currentDate.plusDays(1),
+				currentDate.plusDays(8));
+		cancelledOffer.setStatus(OfferStatus.CANCELLED);
+		doReturn(Lists.newArrayList(cancelledOffer)).when(offerRepository).findAll();
+		
+		verify(offerRepository, times(0)).save(any(Offer.class));
 	}
 
 }

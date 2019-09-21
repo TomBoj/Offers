@@ -26,14 +26,16 @@ public class OfferStatusUtils {
 		LocalDateTime currentDate = LocalDateTime.now();
 		List<Offer> offers = offerRepository.findAll();
 		for (Offer offer : offers) {
-			if(offer.getStartDate().isAfter(currentDate)) {
-				offer.setStatus(OfferStatus.PENDING);
-			} else if (offer.getEndDate().isBefore(currentDate)) {
-				offer.setStatus(OfferStatus.EXPIRED);
-			} else {
-				offer.setStatus(OfferStatus.VALID);
+			if(offer.getStatus() != OfferStatus.CANCELLED) {
+				if(offer.getStartDate().isAfter(currentDate)) {
+					offer.setStatus(OfferStatus.PENDING);
+				} else if (offer.getEndDate().isBefore(currentDate)) {
+					offer.setStatus(OfferStatus.EXPIRED);
+				} else {
+					offer.setStatus(OfferStatus.VALID);
+				}
+				offerRepository.save(offer);
 			}
-			offerRepository.save(offer);
 		}
 	}
 	
