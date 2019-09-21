@@ -4,15 +4,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
 
 @Entity
 public class Offer {
-	
+
 	@Id
 	@GeneratedValue
 	long offerId;
@@ -26,6 +28,8 @@ public class Offer {
 	private double price;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+	@Enumerated(EnumType.STRING)
+	private OfferStatus status;
 	
 	public Offer() {}
 	
@@ -79,6 +83,14 @@ public class Offer {
 	
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public OfferStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OfferStatus status) {
+		this.status = status;
 	}
 
 }

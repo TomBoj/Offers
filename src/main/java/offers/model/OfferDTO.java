@@ -14,6 +14,7 @@ public class OfferDTO {
 	private double price;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
+	private String status;
 	
 	public long getOfferId() {
 		return offerId;
@@ -37,6 +38,10 @@ public class OfferDTO {
 
 	public LocalDateTime getEndDate() {
 		return endDate;
+	}
+
+	public String getStatus() {
+		return status;
 	}
 	
 }
