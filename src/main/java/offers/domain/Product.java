@@ -9,7 +9,7 @@ public class Product {
 	
 	@Id
 	@GeneratedValue
-	long productId;
+	private long productId;
 	
 	private String name;
 	private String description;

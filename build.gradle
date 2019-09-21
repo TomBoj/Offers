@@ -19,6 +19,8 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework:spring-test:5.1.9.RELEASE'
+    testImplementation 'org.mockito:mockito-core:2.1.0'
 }
 
 jar {
