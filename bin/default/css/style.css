@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  height: 50px;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+.form {
+	margin:10px auto;	
+}
+
+.form li {
+	padding: 0;
+	list-style: none;
+	margin: 10px 10px 0 0;
+}
+
+.form label{
+	margin:0 0 3px 0;
+	padding:0px;
+	display:block;
+	font-weight: bold;
+}
