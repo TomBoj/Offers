@@ -3,10 +3,17 @@ package offers.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import offers.domain.Offer;
+import offers.exception.InvalidDatesException;
+import offers.exception.NotFoundException;
+import offers.model.OfferDTO;
 import offers.service.OfferService;
 
 @RestController
@@ -18,6 +25,12 @@ public class OfferController {
 	@GetMapping("/offers")
 	public List<Offer> getOffers() {
 		return offerService.getAllOffers();
+	}
+	
+	@ResponseStatus(HttpStatus.CREATED)
+	@PutMapping("/offers")
+	public Offer createOffer(@RequestBody OfferDTO offerDto) throws NotFoundException, InvalidDatesException {
+		return offerService.createOffer(offerDto);
 	}
 
 }
